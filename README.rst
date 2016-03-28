@@ -11,7 +11,7 @@ Getting started
 
 models:
 
-code::
+..code-block:: python
 
     from django.db import models
     import choicer
