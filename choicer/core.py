@@ -5,18 +5,36 @@ from . import exceptions
 
 __all__ = ['Choicer']
 
-
 class Choicer(object):
 
     # stores the mandatory choice fields
     _mandatory_keys = ['name', 'value', 'verbose_name']
 
 
-    def __init__(self, choice_list):
+    def __init__(self, choice_list, setter_factory=None):
+        """
+        Constructor.
+        :param choice_list: list of dict with keys name, value and verbose_name
+        :param setter_factory: an optional setter factory for custom setter implementations.
+        :return:
+        """
         self._ensure_choices_format(choice_list)
         self._choice_list = choice_list
         self._choice_name_dict = self._list_to_dict(choice_list, 'name')
         self._choice_value_dict = self._list_to_dict(choice_list, 'value')
+        self._setter_factory = setter_factory or factory.get_setter_func
+        self.ENUMS = self._get_enums_class()
+
+    def _get_enums_class(self):
+        """
+        Returns a class ENUMS to access each value by its name.
+        :return:
+        """
+        class Enums(object):
+            pass
+        for choice in self._choice_list:
+            setattr(Enums, choice['name'], choice['value'])
+        return Enums
 
     def _get_func_name(self, prefix, field_name, entry):
         """
@@ -96,7 +114,7 @@ class Choicer(object):
             func_name = self._get_func_name('is', field_name, entry)
             setattr(model_class, func_name, factory.get_getter_func(field_name, entry['value']))
 
-    def patch_setters(self, model_class, field_name, custom_impl=None):
+    def patch_setters(self, model_class, field_name):
         """
 
         :param model_class:
@@ -107,10 +125,8 @@ class Choicer(object):
         for entry in self._choice_list:
             if not entry.get('legacy', False):
                 func_name = self._get_func_name('set', field_name, entry)
-                if custom_impl:
-                    setattr(model_class, func_name, custom_impl(field_name, entry['value']))
-                else:
-                    setattr(model_class, func_name, factory.get_setter_func(field_name, entry['value']))
+                setattr(model_class, func_name, self._setter_factory(field_name, entry['value']))
+
 
     def patch_choicer(self, model_class, name=None):
         """
