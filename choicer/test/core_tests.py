@@ -95,6 +95,18 @@ class ChoicerTests(unittest.TestCase):
         obj = MyModel()
         self.assertRaises(exceptions.ChoicesOutOfSyncError, obj.get_state)
 
+    def test_enums(self):
+        """
+        Tests that the choicer provides its values in choicer.ENUMS
+        :return:
+        """
+        mychoicer = choicer.Choicer(self.CHOICE_LIST)
+        for choice in self.CHOICE_LIST:
+            self.assertEquals(
+                getattr(mychoicer.ENUMS, choice['name']),
+                choice['value']
+            )
+
     def test_separate_patching(self):
         """
         Test the manual/separate patching.
