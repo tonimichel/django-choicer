@@ -9,6 +9,8 @@ Simplify dealing with (large) choices.
 Getting started
 ----------------
 
+Imagin we got a model called Subscription providing a field state.
+
 models:
 
 .. code-block:: python
@@ -16,7 +18,7 @@ models:
     from django.db import models
     import choicer
 
-    sub_choicer = choicer.Choicer([
+    subscription_choicer = choicer.Choicer([
         dict(
             name='started',
             value=0,
