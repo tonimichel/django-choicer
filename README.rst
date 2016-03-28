@@ -9,7 +9,7 @@ Simplify dealing with (large) choices.
 Getting started
 ----------------
 
-Imagin we got a model called Subscription providing a field state.
+Imagine we got a model called Subscription providing a field state.
 
 models:
 
