@@ -1,6 +1,9 @@
 django-choicer
 =============================
 
+.. image:: https://travis-ci.org/tonimichel/django-choicer.svg?branch=master
+    :target: https://travis-ci.org/tonimichel/django-choicer
+
 Simplify dealing with (large) choices.
 
 Getting started
