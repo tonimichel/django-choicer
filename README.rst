@@ -57,7 +57,7 @@ models:
 
 After we defined our model and applied our choicer, we now want to play with the api:
 
-code::
+.. code-block:: python
 
     s = Subscription()
     s.set_state_started()
@@ -113,30 +113,33 @@ This may bring the following issues to deal with:
 Actually we dont want to query our model by integer or string values which are not human-readable.
 So, instead of doing
 
-code:: python
+.. code-block:: python
 
     MyModel.objects.filter(type=0)
 
 its better to do something like this
 
-code:: python
+.. code-block:: python
+
     MyModel.objects.filter(state=STATES.approved)
 
 Furthermore it is sometimes necessary to provide instance methods that check for a certain model state.
 So instead of doing
 
-code:: python
+.. code-block:: python
 
     if obj.state == 0:
         # do something
 
 or a little better
 
+.. code-block:: python
+
     if obj.state == STATES.approved
 
 we actually want to do
 
-code:: python
+.. code-block:: python
 
     if obj.is_state_approved():
         pass
@@ -144,17 +147,19 @@ code:: python
 which is the way to go as our model provide an explicit api check for a given state.
 Considering assignment of a choice, we got similar issues:
 
-code::
+.. code-block:: python
 
     obj.state = 0
 
 is worse than
 
+.. code-block:: python
+
     obj.state = STATES.approved
 
 But what we actually want to do is
 
-code::
+.. code-block:: python
 
     obj.set_state_approved()
 
