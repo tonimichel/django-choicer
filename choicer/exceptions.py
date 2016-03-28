@@ -1,10 +1,15 @@
-from __future__ import unicode_literals
+from __future__ import unicode_literals, print_function
 
 
 class MalformedChoiceDefinition(Exception):
     """
     Indicates that some choices do not provide the required keys.
     """
+    def __init__(self, errors):
+        self.errors = errors
+
+    def __str__(self):
+        return str(self.errors)
 
 
 class ChoiceDoesNotExist(Exception):
@@ -39,7 +44,7 @@ class ChoicesOutOfSyncError(Exception):
             'Legacy choices dont provide setters an dont turn up into your model field\'s '
             'choices.'
         ) % dict(
-            value=self.value,
+            value=self.choice_value,
             field_name=self.field_name,
             model_name=str(self.model_class)
         )

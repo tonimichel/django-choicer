@@ -1,3 +1,4 @@
+from __future__ import unicode_literals, print_function
 import unittest
 import choicer
 from choicer import exceptions
@@ -64,8 +65,8 @@ class ChoicerTests(unittest.TestCase):
                 dict(name='dismissed')
             ])
         except exceptions.MalformedChoiceDefinition as e:
-            exception_list = e.message
-            self.assertTrue(exception_list[0].has_key('choices[1]'))
+            exception_list = e.errors
+            self.assertTrue('choices[1]' in exception_list[0].keys())
 
     def test_choice_does_not_exist_exceptions(self):
         """
@@ -93,8 +94,6 @@ class ChoicerTests(unittest.TestCase):
 
         obj = MyModel()
         self.assertRaises(exceptions.ChoicesOutOfSyncError, obj.get_state)
-
-
 
     def test_separate_patching(self):
         """
