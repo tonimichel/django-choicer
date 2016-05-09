@@ -87,6 +87,13 @@ After we defined our model and applied our choicer, we now want to play with the
     # 5
     print(s.get_state())
     # {'name': 'waitinglist', 'value': 5, verbose_name='On waiting list'}
+    
+    
+    s.STATE_CHOICER.get_choices()
+    # returns the choices
+    
+    s.STATE_CHOICER.get_dict()
+    s.STATE_CHOICER.get_list()
 
 
 
